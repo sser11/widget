@@ -10,9 +10,11 @@ export class QuoteWidget extends UIComponent {
             { text: "Будущее зависит от того, что вы делаете сегодня.", author: "Махатма Ганди" },
             { text: "Успех — это способность идти от неудачи к неудаче, не теряя энтузиазма.", author: "Уинстон Черчилль" },
             { text: "Не ждите. Время никогда не будет идеальным.", author: "Наполеон Хилл" },
-            { text: "Ваше время ограничено, не тратьте его, живя чужой жизнью.", author: "Стив Джобс" }
+            { text: "Ваше время ограничено, не тратьте его, живя чужой жизнью.", author: "Стив Джобс" },
+            { text: "Лучший способ предсказать будущее — создать его.", author: "Питер Друкер" },
+            { text: "Будьте тем изменением, которое хотите видеть в мире.", author: "Махатма Ганди" }
         ];
-        this.currentQuote = this.quotes[0];
+        this.currentQuote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
     }
 
     getIcon() {
@@ -24,8 +26,8 @@ export class QuoteWidget extends UIComponent {
         
         content.innerHTML = `
             <div class="quote-content">
-                <div class="quote-text">"${this.currentQuote.text}"</div>
-                <div class="quote-author">— ${this.currentQuote.author}</div>
+                <div class="quote-text">"${this.escapeHtml(this.currentQuote.text)}"</div>
+                <div class="quote-author">— ${this.escapeHtml(this.currentQuote.author)}</div>
                 <button id="refresh-${this.id}" class="quote-refresh">
                     <i class="fas fa-sync-alt"></i> Новая цитата
                 </button>
@@ -51,8 +53,8 @@ export class QuoteWidget extends UIComponent {
             const quoteText = content.querySelector('.quote-text');
             const quoteAuthor = content.querySelector('.quote-author');
             
-            quoteText.innerHTML = `"${this.currentQuote.text}"`;
-            quoteAuthor.innerHTML = `— ${this.currentQuote.author}`;
+            quoteText.innerHTML = `"${this.escapeHtml(this.currentQuote.text)}"`;
+            quoteAuthor.innerHTML = `— ${this.escapeHtml(this.currentQuote.author)}`;
             
             // Добавляем анимацию
             quoteText.style.animation = 'fadeIn 0.3s ease';
@@ -61,6 +63,4 @@ export class QuoteWidget extends UIComponent {
             }, 300);
         }
         
-        this.showMessage('Цитата обновлена');
-    }
-}
+        this.show
