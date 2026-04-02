@@ -45,7 +45,10 @@ export class ToDoWidget extends UIComponent {
     }
     
     addTask(text) {
-        if (!text.trim()) return;
+        if (!text.trim()) {
+            this.showMessage('Введите текст задачи', true);
+            return;
+        }
         
         const task = {
             id: Date.now(),
@@ -84,7 +87,7 @@ export class ToDoWidget extends UIComponent {
         if (!list) return;
         
         if (this.tasks.length === 0) {
-            list.innerHTML = '<div class="empty-state">Нет задач. Добавьте первую!</div>';
+            list.innerHTML = '<div class="empty-state">✨ Нет задач. Добавьте первую!</div>';
             return;
         }
         
