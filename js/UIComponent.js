@@ -74,13 +74,15 @@ export class UIComponent {
         if (this.element && this.element.parentNode) {
             // Удаляем все сохраненные слушатели
             this.eventListeners.forEach(({ element, event, handler }) => {
-                element.removeEventListener(event, handler);
+                if (element && element.removeEventListener) {
+                    element.removeEventListener(event, handler);
+                }
             });
             
             // Очищаем внутренние слушатели
             this.cleanup();
             
-            this.element.parentNode.removeChild(this.element);
+            this.element.remove();
         }
         
         // Диспатчим событие удаления
@@ -95,25 +97,26 @@ export class UIComponent {
 
     // Показать уведомление
     showMessage(message, isError = false) {
-        const content = this.element?.querySelector('.widget-content');
-        if (content) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = isError ? 'error' : 'success';
-            msgDiv.textContent = message;
-            msgDiv.style.cssText = `
-                position: absolute;
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: ${isError ? '#dc3545' : '#28a745'};
-                color: white;
-                padding: 5px 10px;
-                border-radius: 5px;
-                font-size: 0.8rem;
-                z-index: 1000;
-            `;
-            content.appendChild(msgDiv);
-            setTimeout(() => msgDiv.remove(), 2000);
-        }
+        const msgDiv = document.createElement('div');
+        msgDiv.className = isError ? 'error' : 'success';
+        msgDiv.textContent = message;
+        msgDiv.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: ${isError ? '#dc3545' : '#28a745'};
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        `;
+        document.body.appendChild(msgDiv);
+        setTimeout(() => {
+            if (msgDiv && msgDiv.remove) {
+                msgDiv.remove();
+            }
+        }, 2000);
     }
 }
