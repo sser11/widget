@@ -4,14 +4,14 @@ export class EbayWidget extends UIComponent {
     constructor(config) {
         super({ ...config, title: config.title || 'Поиск на eBay' });
         this.products = [];
-        this.searchQuery = '';
+        this.searchQuery = 'laptop';
     }
 
     getIcon() {
         return 'fab fa-ebay';
     }
 
-    async render() {
+    render() {
         const { widget, content } = this.createWidgetStructure();
         
         content.innerHTML = `
@@ -20,7 +20,7 @@ export class EbayWidget extends UIComponent {
                 <button id="search-btn-${this.id}" class="ebay-search-btn">Найти</button>
             </div>
             <div id="ebay-results-${this.id}" class="ebay-results">
-                <div class="empty-state">Введите запрос для поиска товаров</div>
+                <div class="empty-state"><i class="fas fa-search"></i> Введите запрос для поиска товаров</div>
             </div>
         `;
         
@@ -70,22 +70,23 @@ export class EbayWidget extends UIComponent {
                 <div class="ebay-item">
                     <img src="${product.image}" alt="${product.title}">
                     <div class="ebay-item-info">
-                        <div class="ebay-item-title">${product.title}</div>
-                        <div class="ebay-item-price">${product.price} ${product.currency}</div>
-                        <div style="font-size: 0.75rem; color: #999;">⭐ ${product.rating} (${product.reviews} отзывов)</div>
+                        <div class="ebay-item-title">${this.escapeHtml(product.title)}</div>
+                        <div class="ebay-item-price">$${product.price} ${product.currency}</div>
+                        <div style="font-size: 0.75rem; color: #999; margin-top: 5px;">⭐ ${product.rating} (${product.reviews} отзывов)</div>
                     </div>
                 </div>
             `).join('');
             
             this.showMessage(`Найдено ${products.length} товаров`);
         } catch (error) {
+            console.error('Ebay search error:', error);
             resultsDiv.innerHTML = '<div class="error">Ошибка при поиске товаров</div>';
             this.showMessage('Ошибка поиска', true);
         }
     }
     
     generateMockProducts(query) {
-        const categories = ['Electronics', 'Clothing', 'Home', 'Toys', 'Books'];
+        const categories = ['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books', 'Sports'];
         const currencies = ['USD', 'EUR', 'GBP'];
         const images = [
             'https://picsum.photos/id/0/60/60',
@@ -96,13 +97,19 @@ export class EbayWidget extends UIComponent {
         ];
         
         return Array.from({ length: 4 }, (_, i) => ({
-            title: `${query} ${categories[Math.floor(Math.random() * categories.length)]} ${i + 1}`,
+            title: `${query} ${categories[Math.floor(Math.random() * categories.length)]} - ${i + 1}`,
             price: (Math.random() * 200 + 10).toFixed(2),
             currency: currencies[Math.floor(Math.random() * currencies.length)],
             rating: (Math.random() * 2 + 3).toFixed(1),
             reviews: Math.floor(Math.random() * 1000),
             image: images[Math.floor(Math.random() * images.length)]
         }));
+    }
+    
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
     
     delay(ms) {
