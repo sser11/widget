@@ -2,40 +2,44 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel & Shopping Dashboard</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/components.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Binding of Isaac - Дашборд виджетов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="dashboard-container">
+    <div class="app-container">
+        <!-- Шапка дашборда -->
         <header class="dashboard-header">
-            <h1><i class="fas fa-globe-americas"></i> Travel & Shopping Dashboard</h1>
-            <p class="subtitle">Мониторинг цен на авиабилеты и товары с eBay</p>
+            <div class="logo-area">
+                <div class="isaac-icon">🩸</div>
+                <h1>The Binding of Isaac <span>Дашборд предметов</span></h1>
+            </div>
+            <div class="controls-area">
+                <button id="addItemWidgetBtn" class="btn btn-primary">➕ Предметы по рейтингу</button>
+                <button id="addRecipeWidgetBtn" class="btn btn-secondary">⚗️ Способ получения (Рецепты)</button>
+            </div>
         </header>
 
-        <div class="controls">
-            <button id="addFlightBtn" class="btn btn-primary">
-                <i class="fas fa-plane"></i> Добавить виджет авиабилетов
-            </button>
-            <button id="addEbayBtn" class="btn btn-primary">
-                <i class="fab fa-ebay"></i> Добавить виджет eBay
-            </button>
-            <button id="addTodoBtn" class="btn btn-secondary">
-                <i class="fas fa-tasks"></i> Добавить To-Do лист
-            </button>
-            <button id="addQuoteBtn" class="btn btn-secondary">
-                <i class="fas fa-quote-right"></i> Добавить цитату дня
-            </button>
-        </div>
-
-        <div id="widgetsGrid" class="widgets-grid">
-            <!-- Виджеты будут добавляться сюда динамически -->
-        </div>
+        <!-- Сетка для виджетов (Dashboard будет заполнять сюда) -->
+        <main id="dashboardGrid" class="dashboard-grid">
+            <!-- Виджеты будут добавляться динамически через JS -->
+            <div class="empty-state-message">
+                <div class="empty-icon">📦</div>
+                <h3>Дашборд пуст</h3>
+                <p>Нажмите на кнопки выше, чтобы добавить виджеты с данными из API по игре The Binding of Isaac</p>
+                <small>✨ Виджеты показывают топ предметов по рейтингу и рецепты крафта</small>
+            </div>
+        </main>
+        
+        <footer class="dashboard-footer">
+            <p>Данные получены из открытого API <strong>Binding of Isaac API (БД предметов)</strong> • ООП дашборд</p>
+        </footer>
     </div>
 
+    <!-- Подключаем основной модуль (ES6) -->
     <script type="module" src="main.js"></script>
 </body>
 </html>
