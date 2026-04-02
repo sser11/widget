@@ -132,6 +132,7 @@
 .flight-airline {
     color: #6c757d;
     font-size: 0.85rem;
+    margin-top: 5px;
 }
 
 /* Стили для eBay Widget */
@@ -330,4 +331,16 @@
     text-align: center;
     color: #999;
     padding: 40px;
+}
+
+.success {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
 }
